@@ -15,7 +15,7 @@ namespace patchConfig
 		uint16_t id;
 		uint16_t offset;
 		uint8_t length;
-		attribute *attributes;
+		attribute *attributes[256];
 	};
 
 }

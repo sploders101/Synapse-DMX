@@ -15,56 +15,41 @@ using std::endl;
 void parseLine(patchConfig::patch **fixtures, char *pointer, size_t chars)
 {
 
+	// Parse variables out of the text
 	unsigned int id;
 	unsigned int offset;
 	unsigned int length;
 	char *attributes = (char*) malloc(chars - sizeof(char) * 4);
-
 	sscanf(pointer, "%u,%u,%s", &id, &offset, attributes);
 
-	patchConfig::patch *fixture = (patchConfig::patch*) malloc(sizeof(patchConfig::patch));
-
-	fixture->id = id;
-	fixture->offset = offset;
-
-	// Count attributes
-	char *p = attributes;
-	uint8_t numAttrs = 0;
-	uint16_t strlength = 0;
-	while(*p != '\0') {
-		strlength++;
-		p = p + sizeof(char);
-	}
-	p = attributes;
-	while(p < attributes + ( sizeof(char) * strlength)) {
-		if(numAttrs == 0) numAttrs++;
-		if(*p == ':') {
-			numAttrs++;
-		}
-		p = p + sizeof(char);
-	}
-
-	// Set number of fixtures
-	fixture->length = numAttrs;
-
-	// Reset pointer
-	p = attributes;
+	// Create fixture
+	fixtures[id] = (patchConfig::patch *)malloc(sizeof(patchConfig::patch));
+	fixtures[id]->id = id;
+	fixtures[id]->offset = offset;
 	
-	// Allocate space for all attributes
-	fixture->attributes = (patchConfig::attribute *) malloc(sizeof(patchConfig::attribute) * numAttrs);
+	// Put in attributes
+	char *p = attributes;
 	int8_t currAttr = 0;
-	while(p < attributes + ( sizeof(char) * strlength)) {
+	while(*p != '\0') {
+
+		// Parse out attribute parameters
 		unsigned int type;
 		unsigned int blendMode;
 		sscanf(p, "%u-%u", &type, &blendMode);
-		while(*p != ':') p = p + sizeof(char);
-		p = p + sizeof(char);
-		fixture->attributes[currAttr].blendType = blendMode;
-		fixture->attributes[currAttr].type = type;
-		currAttr++;
-	}
 
-	fixtures[id] = fixture;
+		// Create attribute and fill it in
+		fixtures[id]->attributes[currAttr] = (patchConfig::attribute*) malloc(sizeof(patchConfig::attribute));
+		fixtures[id]->attributes[currAttr]->blendType = blendMode;
+		fixtures[id]->attributes[currAttr]->type = type;
+		currAttr++;
+		
+		// Skip to the next attribute
+		while(*p != ':' && *p != '\0') p = p + sizeof(char);
+		p = p + sizeof(char);
+
+	}
+	fixtures[id]->length = currAttr;
+
 }
 
 void openers::patch(patchConfig::patch **fixtures)
