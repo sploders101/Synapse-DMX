@@ -24,6 +24,7 @@ void parseLine(patchConfig::patch **fixtures, char *pointer, size_t chars)
 
 	// Create fixture
 	fixtures[id] = (patchConfig::patch*) malloc(sizeof(patchConfig::patch));
+	fixtures[id]->exists = true;
 	fixtures[id]->id = id;
 	fixtures[id]->offset = offset;
 	
@@ -65,6 +66,7 @@ void openers::patch(patchConfig::patch **fixtures)
 	char *EOFPointer = newPointer + size;
 
 	memcpy(newPointer, pointer, size);
+	// munmap(pointer, size);
 
 	while(newPointer < EOFPointer) {
 

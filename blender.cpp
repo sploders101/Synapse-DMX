@@ -22,14 +22,18 @@ submasterConfig::submaster nullSub;
 void blender::init()
 {
 
-	// Create null fixture and submaster
-	nullFixture.id = 0;
-	nullSub.id = 0;
+	// Nullify arrays to avoid segfaults
+	nullFixture.exists = false;
+	nullSub.exists = false;
+	for(size_t i = 0; i < 65536; i++)
+	{
+		fixtures[i] = &nullFixture;
+		submasters[i] = &nullSub;
+	}
+	
 
-	// Parse patch.csv
+	// Fill in with real data
 	openers::patch(fixtures);
-
-	// Parse subs.csv
 	openers::submasters(submasters);
 
 }

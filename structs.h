@@ -12,6 +12,7 @@ namespace patchConfig
 
 	struct patch
 	{
+		bool exists;
 		uint16_t id;
 		uint16_t offset;
 		uint8_t length;
@@ -32,8 +33,10 @@ namespace submasterConfig
 
 	struct submaster
 	{
+		bool exists;
 		uint16_t id;
-		blendEntry **entries;
+		uint16_t length;
+		blendEntry *entries[256];
 	};
 
 }
