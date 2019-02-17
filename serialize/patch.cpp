@@ -12,7 +12,7 @@
 using std::cout;
 using std::endl;
 
-void parseLine(patchConfig::patch* fixtures, char *pointer, size_t chars)
+void parseLine(patchConfig::patch **fixtures, char *pointer, size_t chars)
 {
 
 	unsigned int id;
@@ -22,19 +22,18 @@ void parseLine(patchConfig::patch* fixtures, char *pointer, size_t chars)
 
 	sscanf(pointer, "%u,%u,%s", &id, &offset, attributes);
 
-	patchConfig::patch *fixture = &fixtures[id];
+	patchConfig::patch *fixture = (patchConfig::patch*) malloc(sizeof(patchConfig::patch));
 
 	fixture->id = id;
 	fixture->offset = offset;
 
 	// Count attributes
 	char *p = attributes;
-	int8_t numAttrs = 0;
+	uint8_t numAttrs = 0;
 	uint16_t strlength = 0;
 	while(*p != '\0') {
 		strlength++;
 		p = p + sizeof(char);
-		cout << strlength;
 	}
 	p = attributes;
 	while(p < attributes + ( sizeof(char) * strlength)) {
@@ -65,9 +64,10 @@ void parseLine(patchConfig::patch* fixtures, char *pointer, size_t chars)
 		currAttr++;
 	}
 
+	fixtures[id] = fixture;
 }
 
-void openers::patch(patchConfig::patch* fixtures)
+void openers::patch(patchConfig::patch **fixtures)
 {
 	int file = open("./patch.csv", O_RDONLY);
 
@@ -93,10 +93,6 @@ void openers::patch(patchConfig::patch* fixtures)
 		*newPointer = '\0';
 
 		parseLine(fixtures, newPointer - (sizeof(char) * chars), chars);
-
-		cout << "DMX Offset: " << fixtures[1].offset << endl;
-		cout << "DMX Length: " << fixtures[1].length << endl;
-		cout << "Intensity blend type: " << fixtures[1].attributes[0].blendType << endl;
 
 		newPointer = newPointer + sizeof(char);
 

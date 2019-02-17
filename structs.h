@@ -19,4 +19,22 @@ namespace patchConfig
 	};
 
 }
+
+namespace submasterConfig
+{
+
+	struct blendEntry
+	{
+		uint16_t fixtureID;
+		uint16_t attrID;
+		uint16_t value;
+	};
+
+	struct submaster
+	{
+		uint16_t id;
+		blendEntry **entries;
+	};
+
+}
 #endif
