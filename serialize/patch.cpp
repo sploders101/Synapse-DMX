@@ -23,7 +23,7 @@ void parseLine(patchConfig::patch **fixtures, char *pointer, size_t chars)
 	sscanf(pointer, "%u,%u,%s", &id, &offset, attributes);
 
 	// Create fixture
-	fixtures[id] = (patchConfig::patch *)malloc(sizeof(patchConfig::patch));
+	fixtures[id] = (patchConfig::patch*) malloc(sizeof(patchConfig::patch));
 	fixtures[id]->id = id;
 	fixtures[id]->offset = offset;
 	
