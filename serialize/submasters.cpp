@@ -34,7 +34,6 @@ void parseLine(submasterConfig::submaster **submasters, char *pointer, size_t ch
 		sscanf(p, "%u-%u-%u", &fixtureID, &attrID, &value);
 
 		// Create entry and fill it in
-		printf("%u", (unsigned int) currEntry);
 		submasters[id]->entries[currEntry] = (submasterConfig::blendEntry*) malloc(sizeof(submasterConfig::blendEntry));
 		submasters[id]->entries[currEntry]->fixtureID = fixtureID;
 		submasters[id]->entries[currEntry]->attrID = attrID;
