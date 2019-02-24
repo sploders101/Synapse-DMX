@@ -7,7 +7,7 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <semaphore.h>
-#include "blender.h"
+#include "blender.hpp"
 
 using std::cout;
 using std::endl;

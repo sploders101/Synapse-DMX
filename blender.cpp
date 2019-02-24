@@ -6,9 +6,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "blender.h"
-#include "structs.h"
-#include "serialize/serialize.h"
+#include "blender.hpp"
+#include "structs.hpp"
+#include "serialize/serialize.hpp"
 using std::cout;
 using std::endl;
 

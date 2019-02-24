@@ -1,5 +1,5 @@
-#include "serialize.h"
-#include "../structs.h"
+#include "serialize.hpp"
+#include "../structs.hpp"
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <stdlib.h>
@@ -50,6 +50,7 @@ void parseLine(patchConfig::patch **fixtures, char *pointer, size_t chars)
 
 	}
 	fixtures[id]->length = currAttr;
+	free(attributes);
 
 }
 

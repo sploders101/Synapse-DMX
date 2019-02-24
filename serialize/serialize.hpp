@@ -1,6 +1,6 @@
 #ifndef SERIALIZERS
 #define SERIALIZERS
-#include "../structs.h"
+#include "../structs.hpp"
 
 namespace openers {
 	void patch(patchConfig::patch**);

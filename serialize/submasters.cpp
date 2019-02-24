@@ -1,5 +1,5 @@
-#include "serialize.h"
-#include "../structs.h"
+#include "serialize.hpp"
+#include "../structs.hpp"
 #include <inttypes.h>
 #include <stdlib.h>
 #include <stdio.h>
